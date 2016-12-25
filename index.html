@@ -3,10 +3,8 @@
 
 <html>
 <head>
-    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
-          rel="stylesheet" type="text/css"/>
-    <script class="jsbin" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script class="jsbin" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
     <title>PoiSonic Poi APA102 image converter for Teensy</title>
     <style type="text/css">article, aside, figure, footer, header, hgroup,
     menu, nav, section {
@@ -17,24 +15,30 @@
 
 
 <body>
-<!--by mortonkopf-->
 <fieldset>
     <legend>PoiSonic Poi APA102 image converter for Teensy:</legend>
     <p>
+        This is a modified version of Mortonkopf's image conversion utility for use with his persistence-of-vision poi
+        Arduino sketch. (Project page
+        <a href="http://orchardelica.com/wp/?page_id=597">here</a>,
+        PJRC forum discussion thread
+        <a href="https://forum.pjrc.com/threads/30020-Teensy-APA102-POV-Poi-Pixel-Poi-Build-Tutorial">here</a>.)
+        By removing the regular image re-rendering during the generation of the hex code array, the utility now
+        generates code almost instantaneously. This enhancement was done by Josh Horowitz. The code has also been
+        annotated and is available for review and additional contribution
+        <a href="https://github.com/jhorowitz/PoiSonicApa102ImageConverter/blob/master/index.html">here</a>.
+        <br>
+        <br>
+        Below is the original text associated with the image converter, and the enhanced utility follows:
+        <br>
+        <br>
         This code generates a hex code array from an image for use in the APA102 pixel poi. The array in the output box
-        can be copied into the const array[] of the ino sketch.
-        <br>
-        <br>
-        This utility has been written by mortonkopf for use with
-        24 bit rgb arrays using Teensy. <a href="https://github.com/jhorowitz">jhorowitz</a> has added on to
-        mortonkopf's excellent work to improve speed and added comments for readability. If you'd like to contribute,
-        the code is <a href="https://github.com/jhorowitz/PoiSonicApa102ImageConverter/">here.</a> Contributions are
-        more then welcome!
-        <br>
-        <br>
-        Enter led number(eg 60) and the number of slices to divide your image into (eg.150), then select
-        the image you want and hit the <i>Get Code.</i> button.
+        can be copied into the const array[] of the ino sketch. This utility has been written by mortonkopf for use with
+        24 bit rgb arrays using Teensy. Enter led number(eg 60) and number of slices to divide your image into (eg.150),
+        then select the image you want, then hit the button. Wait while the code is generated, then Copy the code. This
+        code currently works, but best to use images of very low res, pre processed, otherwise poor quality output.
     </p>
+
     <p align="center"><img id="z13f"/></p>
     <p align="center"><input name="my-image" onchange="readURL(this);" type="file"/></p>
     <p align="center" class="style1">&nbsp;Output width(number of image slices)
@@ -50,7 +54,6 @@
 
 
 <canvas></canvas>
-<!--code by mortonkopf-->
 <script>
     function h45093() {
 
@@ -129,7 +132,6 @@
         }
     }
 </script>
-<!--code by mortonkopf-->
 
 <p><textarea cols="100" id="OutPutTextArea" rows="10">
 </textarea></p>
