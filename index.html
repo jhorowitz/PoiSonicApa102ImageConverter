@@ -22,13 +22,20 @@
     <legend>PoiSonic Poi APA102 image converter for Teensy:</legend>
     <p>
         This code generates a hex code array from an image for use in the APA102 pixel poi. The array in the output box
-        can be copied into the const array[] of the ino sketch. This utility has been written by mortonkopf for use with
-        24 bit rgb arrays using Teensy. Enter led number(eg 60) and number of slices to divide your image into (eg.150),
-        then select the image you want, then hit the button. Wait while the code is generated, then <!--mk-->Copy the
-        code. This code currently works, but best to use images of very low res, pre processed, otherwise poor quality
-        output.
+        can be copied into the const array[] of the ino sketch.
+        <br>
+        <br>
+        This utility has been written by mortonkopf for use with
+        24 bit rgb arrays using Teensy. <a href="https://github.com/jhorowitz">jhorowitz</a> has added on to
+        mortonkopf's excellent work to improve speed and added comments for readability. If you'd like to contribute,
+        the code is <a href="https://github.com/jhorowitz/PoiSonicApa102ImageConverter/">here.</a> Contributions are
+        more then welcome!
+        <br>
+        <br>
+        Enter led number(eg 60) and the number of slices to divide your image into (eg.150), then select
+        the image you want and hit the <i>Get Code.</i> button.
     </p>
-    <p align="center"><img alt="Pixel poi image to convert" id="z13f" src="#"/></p>
+    <p align="center"><img id="z13f"/></p>
     <p align="center"><input name="my-image" onchange="readURL(this);" type="file"/></p>
     <p align="center" class="style1">&nbsp;Output width(number of image slices)
         <input name="Width" id="zwim" type="number"/>
