@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
+          rel="stylesheet" type="text/css"/>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <title>PoiSonic Poi APA102 image converter for Teensy</title>
+    <style type="text/css">article, aside, figure, footer, header, hgroup,
+    menu, nav, section {
+        display: block;
+    }
+    </style>
+</head>
+
+
+<body>
+<!--by mortonkopf-->
+<fieldset>
+    <legend>PoiSonic Poi APA102 image converter for Teensy:</legend>
+    <p>
+        This code generates a hex code array from an image for use in the APA102 pixel poi. The array in the output box
+        can be copied into the const array[] of the ino sketch. This utility has been written by mortonkopf for use with
+        24 bit rgb arrays using Teensy. Enter led number(eg 60) and number of slices to divide your image into (eg.150),
+        then select the image you want, then hit the button. Wait while the code is generated, then <!--mk-->Copy the
+        code. This code currently works, but best to use images of very low res, pre processed, otherwise poor quality
+        output.
+    </p>
+    <p align="center"><img alt="Pixel poi image to convert" id="z13f" src="#"/></p>
+    <p align="center"><input name="my-image" onchange="readURL(this);" type="file"/></p>
+    <p align="center" class="style1">&nbsp;Output width(number of image slices)
+        <input name="Width" id="zwim" type="number"/>
+    </p>
+    <p align="center" class="style1">&nbsp;Output Height(number of leds on Poi)
+        <input name="Height" id="zhim" type="number"/>
+    </p>
+    <p align="center" class="style1">&nbsp;
+        <button onclick="h45093()">Get Code</button>
+    </p>
+</fieldset>
+
+
+<canvas></canvas>
+<!--code by mortonkopf-->
+<script>
+    function h45093() {
+
+        var width = document.getElementById('zwim').value;
+        var height = document.getElementById('zhim').value;
+        var image = document.querySelector('img');
+
+        // We created a canvas above and access it here because chrome has built
+        // in image manipulation functions. We will use these functions to do the
+        // size transformations and then get the image data.
+        // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getImageData
+        var canvas = document.querySelector('canvas');
+
+        // Set the height and width of the canvas
+        canvas.width = width;
+        canvas.height = height;
+
+        var context = canvas.getContext('2d');
+
+        // This is where we render and resize the image
+        // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
+        context.drawImage(image, 0, 0, width, height);
+
+        // Here we get the data from the array. One hex code is four elements in the
+        // array. The
+        var imageData = context.getImageData(0, 0, width, height).data;
+
+        var result = "const unsigned int array1[] = { ";
+        for (var i = 0, n = imageData.length; i < n; i += 4) {
+
+            // R in RGBA
+            var de = imageData[i];
+            // G in RGBA
+            var ne = imageData[i + 1];
+            // B in RGBA
+            var eu = imageData[i + 2];
+
+            // A in RGBA (opacity). We don't actually use this in our calculation. If you'd like to enable
+            // it, uncomment the code directly below it.
+            var ah = imageData[i + 3];
+
+            // Uncomment this code to enable accurate opacity in your images
+            // http://stackoverflow.com/questions/2049230/convert-rgba-color-to-rgb
+            // de = ((1 - ah) * de) + (ah * de);
+            // ne = ((1 - ah) * ne) + (ah * ne);
+            // eu = ((1 - ah) * eu) + (ah * eu);
+
+            var hexi =
+                // Each one of these take the R, G or B converts it to hex and concatinates them
+                // to make hex values like 51327e
+                ("0" + parseInt(de, 10).toString(16)).slice(-2) +
+                ("0" + parseInt(ne, 10).toString(16)).slice(-2) +
+                ("0" + parseInt(eu, 10).toString(16)).slice(-2);
+
+            // Prepend 0x to the hex to make hex values like 0x51327e
+            result += "0x";
+            result += hexi;
+            result += ", ";
+        }
+        result += "}; //end of array ";
+
+        // Write the final result to the document
+        document.getElementById("OutPutTextArea").innerHTML += result;
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#z13f')
+                    .attr('src', e.target.result)
+                    .width(250)
+                    .height(200);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<!--code by mortonkopf-->
+
+<p><textarea cols="100" id="OutPutTextArea" rows="10">
+</textarea></p>
+</body>
+</html>
